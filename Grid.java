@@ -28,31 +28,31 @@ public class Grid {
     } // (rows x columns Grid), numBombs as specified
 
     public int getNumRows() {
-
+        return numRows;
     }
 
     public int getNumColumns() {
-
+        return numColumns;
     }
 
     public int getNumbBombs() {
-
+        return numBombs;
     }
 
-    public boolean getBombGrid() {
-
+    public boolean[][] getBombGrid() {
+        return bombGrid;
     }
 
-    public int getCountGrid() {
-
+    public int[][] getCountGrid() {
+        return countGrid;
     }
 
     public boolean isBombAtLocation(int row, int column) {
-
+        return bombGrid[row][column];
     }
 
     public int getCountAtLocation(int row, int column) {
-
+        return countGrid[row][column];
     }
 
     public void createBombGrid() {
