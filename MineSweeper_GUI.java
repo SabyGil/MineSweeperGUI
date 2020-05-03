@@ -10,11 +10,31 @@ public class MineSweeper_GUI {
         //  javac MineSweeper_GUI.java && java MineSweeper_GUI
 
 
-        Grid board = new Grid();
+        Grid board = new Grid(); //creates bombgrid and count grid
         boolean[][] bombLocation = board.getBombGrid();
-        
-        displayGrid(bombLocation);
+        int[][] counts = board.getCountGrid();
 
+        displayGrid(bombLocation, counts);
+
+        //  0 | 0 | 1 | 2 | T | 1 | 0 | 0 | 1 | T 
+        // ---------------------------------------
+        //  1 | 1 | 3 | T | 3 | 1 | 1 | 1 | 3 | 2
+        // ---------------------------------------
+        //  2 | T | 3 | T | 2 | 0 | 1 | T | 3 | T
+        // ---------------------------------------
+        //  T | 3 | 3 | 3 | 2 | 1 | 1 | 2 | T | 2
+        // ---------------------------------------
+        //  2 | 3 | T | 2 | T | 1 | 0 | 1 | 1 | 1
+        // ---------------------------------------
+        //  T | 2 | 1 | 2 | 1 | 1 | 0 | 0 | 0 | 0
+        // ---------------------------------------
+        //  2 | 2 | 1 | 0 | 1 | 2 | 3 | 3 | 2 | 1
+        // ---------------------------------------
+        //  2 | T | 2 | 1 | 3 | T | T | T | T | 1
+        // ---------------------------------------
+        //  T | 3 | 2 | T | 3 | T | 6 | T | 6 | 3
+        // ---------------------------------------
+        //  T | 2 | 1 | 1 | 2 | 1 | 3 | T | T | T
 
         // JFrame appFrame = new JFrame();
 
@@ -40,12 +60,31 @@ public class MineSweeper_GUI {
 
     }
 
-    public static void displayGrid(boolean grid[][]) {
+    public static void displayGrid(boolean grid[][], int counts[][]) {
+        int count = 0;
         for(int i=0; i<grid.length; i++) {
             for(int j=0; j<grid[i].length; j++) {
-                System.out.print(grid[i][j] + " ");
+                String sym; 
+                if (grid[i][j]) {
+                    sym = " X";
+                 } else {
+                    sym = " " + String.valueOf(counts[i][j]);
+                 } 
+                System.out.print(sym);
+
+                if( grid[i][j] == true ) {
+                    count++;
+                }
+                if(j != grid[i].length-1) 
+                    System.out.print(" |");
             }
+        
+            if(i != grid.length-1)
+                System.out.print("\n" + "---------------------------------------");
             System.out.println();
         }
+
+        System.out.println("There are " + count + " many bombs");
     }
+    
 }
