@@ -10,13 +10,16 @@ public class Grid {
         this.numRows = 10;
         this.numColumns = 10;
         this.numBombs = 25;
+        createBombGrid();
+        createCountGrid();
     }
 
     public Grid(int rows, int columns) {
         this.numRows = rows;
         this.numColumns = columns;
         this.numBombs = 25;
-
+        createBombGrid();
+        createCountGrid();
     }
 
     // (rows x columns Grid), default value of 25 bombs
@@ -24,7 +27,8 @@ public class Grid {
         this.numRows = rows;
         this.numColumns = columns;
         this.numBombs = numBombs;
-
+        createBombGrid();
+        createCountGrid();
     } // (rows x columns Grid), numBombs as specified
 
     public int getNumRows() {
@@ -55,12 +59,12 @@ public class Grid {
         return countGrid[row][column];
     }
 
-    public void createBombGrid() {
+    private void createBombGrid() {
         // called by constructors to create and populate the bombGrid
 
     }
 
-    public void createCountGrid() {
+    private void createCountGrid() {
 
         // call
     }
