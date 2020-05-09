@@ -55,6 +55,7 @@ public class Grid {
     }
 
     public boolean isBombAtLocation(int row, int column) {
+        // returns false if no bomb at location
         return bombGrid[row][column];
     }
 
@@ -68,27 +69,21 @@ public class Grid {
         Set<String> set = new HashSet<>();
         String key = "";
 
-        Random rand = new Random(); 
-        for( int i = 0; i < numBombs; i++) {
+        Random rand = new Random();
+        for (int i = 0; i < numBombs; i++) {
             int x = rand.nextInt(numRows); // some x
-            int y = rand.nextInt(numColumns);  // some y
-            
+            int y = rand.nextInt(numColumns); // some y
+
             // make sure we have 25 bombs
             key = x + "," + y; // Example: 0,0 or 12,1
 
-            if(set.contains( key )) // have we seen position before?
-                i--;    // Yes, we already put a bomb there. Repeat iteration.
-            else 
-                set.add( key ); // No, first time placing bomb here, add key.
-        
+            if (set.contains(key)) // have we seen position before?
+                i--; // Yes, we already put a bomb there. Repeat iteration.
+            else
+                set.add(key); // No, first time placing bomb here, add key.
+
             bombGrid[x][y] = true;
         }
-        
-        
-
-        
-        
-
     }
 
     private void createCountGrid() {
@@ -97,9 +92,9 @@ public class Grid {
         // Also include current slot in count
         // if ( current slot is a bomb ) -> do the surrounding bomb count anyways
 
-        //                x y
+        // x y
         // current slot = 1,1;
-        // left = [x-1], [y]    
+        // left = [x-1], [y]
         // right = [x+1], [y]
         // diagonalBR = [x+1], [y+1]
         // diagonalBL = [x-1], [y+1]
@@ -109,55 +104,69 @@ public class Grid {
         // topRight = [y - 1], [x + 1]
 
         countGrid = new int[numRows][numColumns];
-        for(int y = 0; y < countGrid.length; y++){
-            for(int x = 0; x < countGrid[y].length; x++){ // bug
+        for (int y = 0; y < countGrid.length; y++) {
+            for (int x = 0; x < countGrid[y].length; x++) { // bug
                 int count = 0;
-                
-                // WARNING: Have check on the left, b/c doing running rightside 
-                // first could throw IndexOutOfBoundsException  
-                
-                boolean up     = isWithinBounds(x,y+1) && bombGrid[x][y+1];
-                boolean down   = isWithinBounds(x,y-1) && bombGrid[x][y-1];
-                boolean left   = isWithinBounds(x-1,y) && bombGrid[x-1][y];
-                boolean right  = isWithinBounds(x+1,y) && bombGrid[x+1][y];
-                boolean diagBotLeft  = isWithinBounds(x-1,y+1) && bombGrid[x-1][y+1];
-                boolean diagBotRight = isWithinBounds(x+1,y+1) && bombGrid[x+1][y+1];
-                boolean diagTopLeft  = isWithinBounds(x-1,y-1) && bombGrid[x-1][y-1];
-                boolean diagTopRight = isWithinBounds(x+1,y-1) && bombGrid[x+1][y-1];
-                
+
+                // WARNING: Have check on the left, b/c doing running rightside
+                // first could throw IndexOutOfBoundsException
+
+                boolean up = isWithinBounds(x, y + 1) && bombGrid[x][y + 1];
+                boolean down = isWithinBounds(x, y - 1) && bombGrid[x][y - 1];
+                boolean left = isWithinBounds(x - 1, y) && bombGrid[x - 1][y];
+                boolean right = isWithinBounds(x + 1, y) && bombGrid[x + 1][y];
+                boolean diagBotLeft = isWithinBounds(x - 1, y + 1) && bombGrid[x - 1][y + 1];
+                boolean diagBotRight = isWithinBounds(x + 1, y + 1) && bombGrid[x + 1][y + 1];
+                boolean diagTopLeft = isWithinBounds(x - 1, y - 1) && bombGrid[x - 1][y - 1];
+                boolean diagTopRight = isWithinBounds(x + 1, y - 1) && bombGrid[x + 1][y - 1];
+
                 // Tally counts of bombs around our current slot.
-                if (up) { count++; }
-                if (down) { count++; }
-                if (left) { count++; }  
-                if (right) { count++; }  
-                if (diagBotLeft) { count++; }
-                if (diagBotRight) { count++; }
-                if (diagTopLeft) { count++; }
-                if (diagTopRight) { count++; }  
-                
-                // set total num of bombs counted around this position to count 
+                if (up) {
+                    count++;
+                }
+                if (down) {
+                    count++;
+                }
+                if (left) {
+                    count++;
+                }
+                if (right) {
+                    count++;
+                }
+                if (diagBotLeft) {
+                    count++;
+                }
+                if (diagBotRight) {
+                    count++;
+                }
+                if (diagTopLeft) {
+                    count++;
+                }
+                if (diagTopRight) {
+                    count++;
+                }
+
+                // set total num of bombs counted around this position to count
                 countGrid[x][y] = count;
             }
         }
-         
-        //  0  |  0 |  1 | X             
-        // -------------------
-        //  1  |  1 |  2 |  2
-        // -------------------
-        //  X  |  1 |  1 | X 
-        // -------------------
-        //   1 |  1 |  1 |  1 
-        // call                
 
-        
+        // 0 | 0 | 1 | X
+        // -------------------
+        // 1 | 1 | 2 | 2
+        // -------------------
+        // X | 1 | 1 | X
+        // -------------------
+        // 1 | 1 | 1 | 1
+        // call
+
     }
 
-    public boolean isWithinBounds(int x, int y){
+    public boolean isWithinBounds(int x, int y) {
         boolean returnValue = false;
-        if(x >= 0 && x < numColumns && y >= 0 && y < numRows)
-        {
+        if (x >= 0 && x < numColumns && y >= 0 && y < numRows) {
             returnValue = true;
-        } 
+        }
         return returnValue;
     }
 

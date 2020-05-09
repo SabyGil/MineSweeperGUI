@@ -28,7 +28,7 @@ public class MineSweeperPanel extends JPanel {
         add(gridPanel);
     }
 
-    public JButton[][] getBtnGrid(){
+    public JButton[][] getBtnGrid() {
         return btnGrid;
     }
 }
