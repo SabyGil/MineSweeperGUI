@@ -42,16 +42,24 @@ public class Grid {
         return numColumns;
     }
 
-    public int getNumbBombs() {
+    public int getNumBombs() {
         return numBombs;
     }
 
     public boolean[][] getBombGrid() {
-        return bombGrid;
+        boolean[][] temp = new boolean[numRows][numColumns];
+        for (int i = 0; i < numRows; ++i)
+            for (int j = 0; j < numColumns; ++j)
+                temp[i][j] = bombGrid[i][j];
+        return temp;
     }
 
     public int[][] getCountGrid() {
-        return countGrid;
+        int[][] temp = new int[numRows][numColumns];
+        for (int i = 0; i < numRows; ++i)
+            for (int j = 0; j < numColumns; ++j)
+                temp[i][j] = countGrid[i][j];
+        return temp;
     }
 
     public boolean isBombAtLocation(int row, int column) {
@@ -104,13 +112,14 @@ public class Grid {
         // topRight = [y - 1], [x + 1]
 
         countGrid = new int[numRows][numColumns];
-        for (int x = 0; x < countGrid.length; x++) {
-            for (int y = 0; y < countGrid[x].length; y++) { // bug
+        for (int x = 0; x < numRows; x++) {
+            for (int y = 0; y < numColumns; y++) { // bug
                 int count = 0;
 
                 // WARNING: Have check on the left, b/c doing running rightside
                 // first could throw IndexOutOfBoundsException
 
+                boolean center = isWithinBounds(x, y) && bombGrid[x][y];
                 boolean down = isWithinBounds(x, y + 1) && bombGrid[x][y + 1];
                 boolean up = isWithinBounds(x, y - 1) && bombGrid[x][y - 1];
                 boolean left = isWithinBounds(x - 1, y) && bombGrid[x - 1][y];
@@ -143,6 +152,9 @@ public class Grid {
                     count++;
                 }
                 if (diagTopRight) {
+                    count++;
+                }
+                if (center) {
                     count++;
                 }
 

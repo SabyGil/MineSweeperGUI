@@ -1,31 +1,46 @@
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
 public class MineSweeperPanel extends JPanel {
     private JButton[][] btnGrid;
+    public JButton refreshBtn;
+    private final int CELL_SIZE = 48;
 
     public MineSweeperPanel(int rows, int columns) {
         // this.color = Color.BLUE;
-        setBackground(Color.BLUE);
-        JButton refreshBtn = new JButton("Refresh");
-
+        // setBackground(Color.BLUE);
+        refreshBtn = new JButton("Refresh");
+        JPanel gamePanel = new JPanel(new BorderLayout());
         add(refreshBtn);
         JPanel gridPanel = new JPanel(new GridLayout(rows, columns));
         btnGrid = new JButton[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 JButton btn = new JButton(" ");
-                btn.setPreferredSize(new Dimension(50, 50));
-                btn.setBackground(Color.ORANGE);
+                btn.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
                 btnGrid[i][j] = btn;
                 gridPanel.add(btnGrid[i][j]);
             }
         }
 
-        add(gridPanel);
+        gamePanel.add(refreshBtn, BorderLayout.NORTH);
+        gamePanel.add(gridPanel, BorderLayout.CENTER);
+        add(gamePanel);
+    }
+
+    public void resetButtons() {
+        for (int i = 0; i < btnGrid.length; i++) {
+            for (int j = 0; j < btnGrid[i].length; j++) {
+                btnGrid[i][j].setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
+                btnGrid[i][j].setBackground(new Color(245, 245, 245));
+                btnGrid[i][j].setText("");
+                btnGrid[i][j].setEnabled(true);
+            }
+        }
     }
 
     public JButton[][] getBtnGrid() {
