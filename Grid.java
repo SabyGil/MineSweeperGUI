@@ -104,15 +104,15 @@ public class Grid {
         // topRight = [y - 1], [x + 1]
 
         countGrid = new int[numRows][numColumns];
-        for (int y = 0; y < countGrid.length; y++) {
-            for (int x = 0; x < countGrid[y].length; x++) { // bug
+        for (int x = 0; x < countGrid.length; x++) {
+            for (int y = 0; y < countGrid[x].length; y++) { // bug
                 int count = 0;
 
                 // WARNING: Have check on the left, b/c doing running rightside
                 // first could throw IndexOutOfBoundsException
 
-                boolean up = isWithinBounds(x, y + 1) && bombGrid[x][y + 1];
-                boolean down = isWithinBounds(x, y - 1) && bombGrid[x][y - 1];
+                boolean down = isWithinBounds(x, y + 1) && bombGrid[x][y + 1];
+                boolean up = isWithinBounds(x, y - 1) && bombGrid[x][y - 1];
                 boolean left = isWithinBounds(x - 1, y) && bombGrid[x - 1][y];
                 boolean right = isWithinBounds(x + 1, y) && bombGrid[x + 1][y];
                 boolean diagBotLeft = isWithinBounds(x - 1, y + 1) && bombGrid[x - 1][y + 1];
@@ -164,9 +164,9 @@ public class Grid {
 
     public boolean isWithinBounds(int x, int y) {
         boolean returnValue = false;
-        if (x >= 0 && x < numColumns && y >= 0 && y < numRows) {
+        if (x >= 0 && x < numRows && y >= 0 && y < numColumns)
             returnValue = true;
-        }
+
         return returnValue;
     }
 

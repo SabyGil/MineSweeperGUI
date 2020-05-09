@@ -21,11 +21,11 @@ public class MineSweeperController {
     public void setActionListeners() {
         // Add clickEvents/actionListeners to grid buttons
         JButton[][] buttons = panel.getBtnGrid();
-        for (int i = 0; i < buttons.length; i++) { // Rows
-            for (int j = 0; j < buttons[i].length; j++) { // Columns
+        for (int i = 0; i < buttons.length; i++) { // row
+            for (int j = 0; j < buttons[i].length; j++) { // col
+                int x = i; // x = COLUMN
+                int y = j; // y = ROW
                 JButton btn = buttons[i][j];
-                int x = j; // Columns
-                int y = i; // Rows
                 btn.addActionListener((e) -> onCellClick(btn, x, y));
             }
         }
@@ -33,13 +33,13 @@ public class MineSweeperController {
 
     public void revealAllBtns() {
         JButton[][] buttons = panel.getBtnGrid();
-        for (int i = 0; i < buttons.length; i++) {
-            for (int j = 0; j < buttons[i].length; j++) {
-                JButton btn = buttons[i][j];
-                if (grid.isBombAtLocation(i, j)) {
+        for (int x = 0; x < buttons.length; x++) {
+            for (int y = 0; y < buttons[x].length; y++) {
+                JButton btn = buttons[x][y];
+                if (grid.isBombAtLocation(x, y)) {
                     displayBomb(btn);
                 } else {
-                    displayCount(btn, i, j);
+                    displayCount(btn, x, y);
                 }
 
             }

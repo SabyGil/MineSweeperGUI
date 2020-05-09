@@ -10,12 +10,6 @@ public class MineSweeper_GUI {
         // Use this command
         // javac MineSweeper_GUI.java && java MineSweeper_GUI
 
-        Grid board = new Grid(); // creates bombgrid and count grid
-        boolean[][] bombLocation = board.getBombGrid();
-        int[][] counts = board.getCountGrid();
-
-        displayGrid(bombLocation, counts);
-
         // 0 | 0 | 1 | 2 | T | 1 | 0 | 0 | 1 | T
         // ---------------------------------------
         // 1 | 1 | 3 | T | 3 | 1 | 1 | 1 | 3 | 2
@@ -44,6 +38,10 @@ public class MineSweeper_GUI {
         panel.add(refresh, BorderLayout.NORTH);
 
         MineSweeperController control = new MineSweeperController(10, 10);
+        boolean[][] bombLocation = control.getGrid().getBombGrid();
+        int[][] counts = control.getGrid().getCountGrid();
+        displayGrid(bombLocation, counts);
+
         appFrame.add(control.getPanel());
 
         // // Set the frame's width (400) and height (250) in pixels
