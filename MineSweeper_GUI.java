@@ -6,7 +6,7 @@ public class MineSweeper_GUI {
 
         JFrame appFrame = new JFrame();
 
-        MineSweeperController control = new MineSweeperController(10, 10, 25);
+        MineSweeperController control = new MineSweeperController(5, 5, 5);
 
         // holds buttons & layouts
         appFrame.add(control.getPanel());

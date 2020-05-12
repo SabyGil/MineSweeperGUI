@@ -28,7 +28,8 @@ public class MineSweeperController {
         panel.resetButtons();
         this.cellsLeft = (this.numCols * this.numRows) - this.numBombs;
 
-        // THIS DISPLAY IN CONSOLE displayGrid(grid.getBombGrid(), grid.getCountGrid());
+        // THIS DISPLAY IN CONSOLE 
+        displayGrid(grid.getBombGrid(), grid.getCountGrid());
     }
 
     public void setActionListeners() {
@@ -88,12 +89,14 @@ public class MineSweeperController {
             revealAllBtns();
             JOptionPane.showMessageDialog(null, "You lose! ");
             playAgain();
-        } else {
-            displayCount(btn, x, y);
+        } else { 
             if (grid.getCountAtLocation(x, y) == 0) {
                 Set<String> set = new HashSet<String>();
                 revealAround(x, y, set, x, y);
+            } else {
+                displayCount(btn, x, y);
             }
+
             if (this.cellsLeft == 0) {
                 System.out.println("You won!");
                 JOptionPane.showMessageDialog(null, "You win!");
@@ -107,7 +110,14 @@ public class MineSweeperController {
         if (!grid.isWithinBounds(x, y)) {// is in bounds
             return;
         }
+        if (grid.isBombAtLocation(x, y)) {
+            return;
+        }
+        if (visited.contains(x + "," + y)) { // already visited there
+            return;
+        }
         if (grid.getCountAtLocation(prevX, prevY) == 0 && grid.getCountAtLocation(x, y) != 0) {
+            visited.add(x + "," + y); // Remember that we visited here
             displayCount(buttons[x][y], x, y);
             return;
         }
@@ -115,14 +125,8 @@ public class MineSweeperController {
             // if not 0 values, return
             return;
         }
-        if (grid.isBombAtLocation(x, y)) {
-            return;
-        }
-        if (visited.contains(x + "," + y)) { // already visited there
-            return;
-        }
+        
 
-        // System.out.println("Revealing - [" + x + ", " + y + "]");
         visited.add(x + "," + y); // Remember that we visited here
         displayCount(buttons[x][y], x, y);
         revealAround(x + 1, y, visited, x, y); // right
@@ -150,6 +154,7 @@ public class MineSweeperController {
     }
 
     public void displayCount(JButton btn, int x, int y) {
+        System.out.println("Revealing - [" + x + ", " + y + "]");
         int count = grid.getCountAtLocation(x, y);
         btn.setBackground(new Color(220, 220, 220));
         btn.setText(count + "");
